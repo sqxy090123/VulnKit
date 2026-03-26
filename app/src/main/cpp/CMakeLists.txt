@@ -13,6 +13,8 @@ add_library(vulnkit SHARED
         root_shell.c
         exploits/cve_2019_2215.c
         exploits/cve_2024_43093_helper.c
+        exploits/cve_2025_48572_helper.c
+
 )
 
 find_library(log-lib log)
