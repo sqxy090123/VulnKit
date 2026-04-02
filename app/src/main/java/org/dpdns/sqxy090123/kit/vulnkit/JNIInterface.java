@@ -5,21 +5,23 @@ public class JNIInterface {
         System.loadLibrary("vulnkit");
     }
 
-    // 尝试利用指定漏洞，成功返回 0，失败返回 -1
-    public static native int runExploit(String exploitName);
+    // 检测 setuid 系统调用是否可用（不被 seccomp 杀死）
+    public static native int checkSetuidAvailable();
 
-    // 利用成功后，启动 root shell（阻塞，直到 shell 准备好）
-    public static native void startRootShell();
+    // 各漏洞独立 native 方法
+    public static native int cve20192215();
+    public static native int cve20200041();
+    public static native int cve20210920();
+    public static native boolean cve202538352_exploit();
+    public static native boolean cve20260107_exploit();
+    public static native boolean cve202621385_exploit();
+    public static native boolean cve202443093_setuidZero();
+    public static native boolean cve202548572_setuidZero();
 
-    // 向 root shell 写入命令，返回写入的字节数
+    // Root Shell 管理
+    public static native int startRootShell();
     public static native int writeRootShell(String cmd);
-
-    // 从 root shell 读取一行输出（阻塞），返回读取的字符串
     public static native String readRootShell();
-
-    // 关闭 root shell
     public static native void closeRootShell();
-
-    // 检查 root shell 是否可用
     public static native boolean isRootShellAvailable();
 }

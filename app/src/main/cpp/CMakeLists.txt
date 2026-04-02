@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.4.1)
 
 project(vulnkit)
 
-# 添加当前目录和 include 子目录
 include_directories(
         ${CMAKE_CURRENT_SOURCE_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/include
@@ -18,7 +17,7 @@ add_library(vulnkit SHARED
         exploits/cve_2026_0107_helper.c
         exploits/cve_2026_21385.c
         exploits/cve_2025_38352.c
-        exploits/cve_2024_31317.c
+        # cve_2024_31317.c 已删除
 )
 
 find_library(log-lib log)

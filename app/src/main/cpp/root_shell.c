@@ -17,10 +17,8 @@ static int root_stdout = -1;
 static int root_stderr = -1;
 
 int establish_root_shell(void) {
-    if (getuid() != 0) {
-        LOGI("Not root, cannot establish root shell");
-        return -1;
-    }
+    // 如果已经有 shell 则直接返回成功
+    if (root_pid > 0) return 0;
 
     int pipe_stdin[2], pipe_stdout[2], pipe_stderr[2];
     if (pipe(pipe_stdin) < 0 || pipe(pipe_stdout) < 0 || pipe(pipe_stderr) < 0) {
@@ -30,6 +28,7 @@ int establish_root_shell(void) {
 
     pid_t pid = fork();
     if (pid == 0) {
+        // 子进程：重定向标准输入输出
         dup2(pipe_stdin[0], STDIN_FILENO);
         dup2(pipe_stdout[1], STDOUT_FILENO);
         dup2(pipe_stderr[1], STDERR_FILENO);
@@ -37,6 +36,11 @@ int establish_root_shell(void) {
         close(pipe_stdout[0]); close(pipe_stdout[1]);
         close(pipe_stderr[0]); close(pipe_stderr[1]);
 
+        // 尝试提升权限（如果当前进程已经是 root 则直接 setuid(0)）
+        setuid(0);
+        setgid(0);
+
+        // 执行 shell
         char *argv[] = {"/system/bin/sh", NULL};
         execve(argv[0], argv, environ);
         perror("execve");
