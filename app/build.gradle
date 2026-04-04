@@ -59,6 +59,7 @@ android {
 
     buildFeatures {
         aidl(true)
+        viewBinding true
     }
 
     tasks.withType(JavaCompile) {
@@ -76,4 +77,5 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'dev.rikka.shizuku:api:13.1.5'
     implementation 'dev.rikka.shizuku:provider:13.1.5'
+    implementation 'androidx.core:core-splashscreen:1.0.1'
 }

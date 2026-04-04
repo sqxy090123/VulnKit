@@ -24,4 +24,22 @@ public class JNIInterface {
     public static native String readRootShell();
     public static native void closeRootShell();
     public static native boolean isRootShellAvailable();
+    public static native boolean isHarmonyOS();
+    public static native boolean cve20254642_exploit();
+
+    public static native boolean cve202320938_exploit();
+
+    public static native boolean cve202222057_exploit();
+
+    public static native boolean cve202520801_exploit();
+
+    public static native boolean cve202443066_exploit();
+
+    public static native boolean cve202548543_exploit();
+
+    public static native boolean cve202521479_exploit();
+
+    public static native boolean cve202536920_exploit();
+    public static native boolean cve20260038_exploit();
+    public static native boolean cve20260032_exploit();
 }

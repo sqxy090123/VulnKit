@@ -1,0 +1,17 @@
+<resources>
+    <!-- 启动主题，用于 MainActivity 的启动窗口 -->
+    <style name="AppTheme.Launcher" parent="Theme.VulnKit">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationFade</item>
+    </style>
+
+    <!-- 窗口转场动画 -->
+    <style name="WindowAnimationFade" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/fade_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/fade_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/fade_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/fade_out</item>
+    </style>
+</resources>

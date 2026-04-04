@@ -91,21 +91,57 @@ public class TerminalView extends ScrollView {
     }
 
     private void executeCommand(String cmd) {
-        // 特殊命令：切换到 root shell
         if (cmd.equals("su")) {
             if (JNIInterface.isRootShellAvailable()) {
                 switchToRootShell();
             } else {
-                outputView.append("Root shell 不可用，请先利用漏洞\n");
+                outputView.append("Root shell 不可用，请先利用提权漏洞\n");
+            }
+            return;
+        }
+        if (cmd.startsWith("runin ")) {
+            String target = cmd.substring(6).trim(); // 提取 app|shell|system|root
+            if (target.equals("app")) {
+                // 降级到普通用户 shell (启动一个新的进程)
+                // 注意：这需要 JNIInterface 实现对应的降级逻辑，目前先留空
+                outputView.append("切换到 App shell 的功能正在开发中\n");
+            } else if (target.equals("shell")) {
+                // 降级到 shell 用户 (通常是 2000 或 2001)
+                outputView.append("切换到 Shell shell 的功能正在开发中\n");
+            } else if (target.equals("system")) {
+                // 降级到 system 用户
+                outputView.append("切换到 System shell 的功能正在开发中\n");
+            } else if (target.equals("root")) {
+                if (!usingRootShell) {
+                    switchToRootShell();
+                } else {
+                    outputView.append("已经是 root shell\n");
+                }
+            } else {
+                outputView.append("用法: runin app|shell|system|root\n");
+            }
+            return;
+        }
+
+        // 处理 'exituser' 命令，退出当前 shell，返回初始 shell
+        if (cmd.equals("exituser")) {
+            if (usingRootShell) {
+                // 关闭当前 root shell
+                JNIInterface.closeRootShell();
+                usingRootShell = false;
+                // 重新启动普通 shell
+                startShell();
+                outputView.append("已退出 root shell，返回普通 shell\n");
+            } else {
+                outputView.append("当前不是 root shell，无需退出\n");
             }
             return;
         }
 
         if (usingRootShell) {
-            // 使用 root shell 执行命令
             JNIInterface.writeRootShell(cmd + "\n");
             String output = JNIInterface.readRootShell();
-            outputView.append(output + "\n");
+            outputView.append((output != null && !output.isEmpty()) ? output + "\n" : "(命令无输出)\n");
         } else {
             if (shellOutput == null) {
                 outputView.append("shell 未启动\n");
@@ -141,5 +177,19 @@ public class TerminalView extends ScrollView {
                 }
             }
         }).start();
+        if (usingRootShell) {
+            // 自动执行 whoami 验证
+            JNIInterface.writeRootShell("whoami\n");
+            String output = JNIInterface.readRootShell();
+            if (output != null && output.contains("root")) {
+                outputView.append("Root shell 验证成功: " + output);
+            } else {
+                outputView.append("Root shell 验证失败，输出: " + (output != null ? output : "null") + "\n");
+                outputView.append("请检查漏洞是否正确提权\n");
+                // 如果验证失败，可以考虑回退到普通 shell
+                usingRootShell = false;
+                startShell();
+            }
+        }
     }
 }

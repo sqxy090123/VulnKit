@@ -22,4 +22,12 @@
         android:background="#000000"
         android:textColor="#00FF00"
         android:textSize="12sp" />
+    <!-- 在 TerminalView 下方或合适位置添加 -->
+    <Button
+        android:id="@+id/btn_remove_admin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="取消设备管理员"
+        android:visibility="gone"
+        android:layout_margin="8dp" />
 </LinearLayout>

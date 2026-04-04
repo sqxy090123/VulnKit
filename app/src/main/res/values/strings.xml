@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">VulnKit</string>
+    <string name="loading_message">正在执行漏洞...</string>
+    <string name="loading_icon_desc">加载图标</string>
 </resources>

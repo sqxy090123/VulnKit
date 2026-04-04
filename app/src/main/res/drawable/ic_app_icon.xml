@@ -1,0 +1,187 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <!-- Background Gradient -->
+        <radialGradient id="bgGrad" cx="50%" cy="50%" r="70%">
+            <stop offset="0%" stop-color="#1A242E" />
+            <stop offset="100%" stop-color="#0A0F16" />
+        </radialGradient>
+
+        <!-- Metallic Gradients for Tools (Semi-flat, subtle sheen) -->
+        <linearGradient id="cyanMetal" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#00FFFF" />
+            <stop offset="100%" stop-color="#0088CC" />
+        </linearGradient>
+        <linearGradient id="orangeMetal" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FFD54F" />
+            <stop offset="100%" stop-color="#FF6D00" />
+        </linearGradient>
+        <linearGradient id="redMetal" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FF5252" />
+            <stop offset="100%" stop-color="#D50000" />
+        </linearGradient>
+
+        <!-- Glow Filters -->
+        <filter id="glow-cyan" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="6" result="blur" />
+            <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
+        <filter id="glow-orange" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="6" result="blur" />
+            <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
+        <filter id="glow-red" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="6" result="blur" />
+            <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+            </feMerge>
+        </filter>
+
+        <!-- Background Hex/Matrix Grid Pattern -->
+        <pattern id="dotGrid" width="30" height="30" patternUnits="userSpaceOnUse">
+            <circle cx="15" cy="15" r="1.5" fill="#2A3B4C" opacity="0.6" />
+            <circle cx="0" cy="0" r="1.5" fill="#2A3B4C" opacity="0.3" />
+        </pattern>
+    </defs>
+
+    <!-- ==================== BACKGROUND ==================== -->
+    <!-- Dark Tech Background (Deep Slate/Charcoal) -->
+    <rect width="512" height="512" fill="url(#bgGrad)" />
+    <rect width="512" height="512" fill="url(#dotGrid)" />
+
+    <!-- Digital Rain / Binary Fragments (Low Opacity) -->
+    <g opacity="0.12" font-family="monospace" font-size="12" fill="#00FFFF">
+        <text x="50" y="100">10</text><text x="50" y="115">01</text><text x="50" y="130">11</text>
+        <text x="90" y="220">01</text><text x="90" y="235">00</text>
+        <text x="420" y="280">11</text><text x="420" y="295">00</text><text x="420" y="310">01</text>
+        <text x="460" y="160">10</text><text x="460" y="175">11</text>
+        <text x="30" y="400">00</text><text x="30" y="415">10</text>
+        <text x="470" y="450">01</text><text x="470" y="465">11</text>
+    </g>
+
+    <!-- ==================== ORBITAL RINGS (Framework Structure) ==================== -->
+    <ellipse cx="256" cy="256" rx="170" ry="60" fill="none" stroke="#2979FF" stroke-width="2" stroke-dasharray="15 5 5 5" opacity="0.4" transform="rotate(-25, 256, 256)" />
+    <ellipse cx="256" cy="256" rx="170" ry="60" fill="none" stroke="#FF9100" stroke-width="1.5" stroke-dasharray="8 8" opacity="0.3" transform="rotate(30, 256, 256)" />
+
+    <!-- ==================== TRACE LINES (Connecting Tools to Center) ==================== -->
+    <path d="M 180 180 Q 150 150 120 120" fill="none" stroke="#00FFFF" stroke-width="2" opacity="0.6" />
+    <path d="M 332 180 Q 362 150 392 120" fill="none" stroke="#FF9100" stroke-width="2" opacity="0.6" />
+    <path d="M 256 320 L 256 350" fill="none" stroke="#FF1744" stroke-width="2" opacity="0.6" />
+
+    <!-- Trace Glowing Nodes -->
+    <circle cx="180" cy="180" r="4" fill="#00FFFF" filter="url(#glow-cyan)" />
+    <circle cx="332" cy="180" r="4" fill="#FF9100" filter="url(#glow-orange)" />
+    <circle cx="256" cy="320" r="4" fill="#FF1744" filter="url(#glow-red)" />
+
+    <!-- ==================== BOTTOM: CODE FRAGMENT (Being Sliced) ==================== -->
+    <g id="code-block" transform="translate(176, 350)">
+        <!-- Kernel Memory Dump Block -->
+        <rect x="0" y="0" width="160" height="55" rx="4" fill="#0A0F16" stroke="#00FFFF" stroke-width="2" />
+
+        <!-- Hex Dump Simulation -->
+        <!-- Address Column -->
+        <text x="12" y="16" font-family="monospace" font-size="10" fill="#FF9100" opacity="0.8">0x00</text>
+        <text x="12" y="30" font-family="monospace" font-size="10" fill="#FF9100" opacity="0.8">0x08</text>
+        <text x="12" y="44" font-family="monospace" font-size="10" fill="#FF9100" opacity="0.8">0x10</text>
+
+        <!-- Hex Data Column -->
+        <text x="40" y="16" font-family="monospace" font-size="10" fill="#00FFFF" opacity="0.6">KERNEL</text>
+        <text x="40" y="30" font-family="monospace" font-size="10" fill="#00FFFF" opacity="0.6">EXPLOIT</text>
+        <text x="40" y="44" font-family="monospace" font-size="10" fill="#FF1744" opacity="0.8">PRIVESC</text>
+
+        <!-- ASCII Column -->
+        <text x="100" y="16" font-family="monospace" font-size="10" fill="#00FFFF" opacity="0.4">KERN</text>
+        <text x="100" y="30" font-family="monospace" font-size="10" fill="#00FFFF" opacity="0.4">EXPL</text>
+        <text x="100" y="44" font-family="monospace" font-size="10" fill="#FF1744" opacity="0.6">PRIV</text>
+
+        <!-- Slicing Cut Line (Red Glowing) -->
+        <line x1="80" y1="0" x2="80" y2="55" stroke="#FF1744" stroke-width="4" stroke-dasharray="6 4" filter="url(#glow-red)" />
+    </g>
+
+    <!-- ==================== BOTTOM: SCISSORS (CVE Slicing) ==================== -->
+    <g id="scissors" transform="translate(256, 385)">
+        <!-- Blade 1 (Left) -->
+        <path d="M 0 0 L -60 -60 L -85 -45 L -30 10 Z" fill="none" stroke="url(#redMetal)" stroke-width="8" stroke-linejoin="round" filter="url(#glow-red)"/>
+        <!-- Blade 2 (Right) -->
+        <path d="M 0 0 L 60 -60 L 85 -45 L 30 10 Z" fill="none" stroke="url(#redMetal)" stroke-width="8" stroke-linejoin="round" filter="url(#glow-red)"/>
+        <!-- Pivot Mechanism -->
+        <circle cx="0" cy="0" r="14" fill="#0A0F16" stroke="#FF1744" stroke-width="4" />
+        <circle cx="0" cy="0" r="6" fill="#FF1744" filter="url(#glow-red)" />
+        <!-- Scissors Handles -->
+        <circle cx="-55" cy="75" r="35" fill="none" stroke="url(#redMetal)" stroke-width="8" />
+        <circle cx="55" cy="75" r="35" fill="none" stroke="url(#redMetal)" stroke-width="8" />
+    </g>
+
+    <!-- ==================== CENTER: BROKEN SHIELD & SHATTERED LOCK ==================== -->
+    <g id="center-shield">
+        <!-- Main Shield Structure -->
+        <path d="M 256 130 L 350 170 L 350 280 C 350 370 290 410 256 430 C 222 410 162 370 162 280 L 162 170 Z" fill="#0A0F16" stroke="#2979FF" stroke-width="8" stroke-linejoin="round" />
+
+        <!-- Inner Shield Tech Detail -->
+        <path d="M 256 145 L 335 180 L 335 280 C 335 355 290 395 256 415 C 222 395 177 355 177 280 L 177 180 Z" fill="none" stroke="#00FFFF" stroke-width="2" opacity="0.3" />
+        <path d="M 256 160 L 320 190 L 320 280 C 320 340 290 380 256 400 C 222 380 192 340 192 280 L 192 190 Z" fill="none" stroke="#00FFFF" stroke-width="1" opacity="0.4" />
+
+        <!-- Shattered Lock Mechanism -->
+        <!-- Lock Body -->
+        <rect x="226" y="255" width="60" height="55" rx="8" fill="#0A0F16" stroke="#00FFFF" stroke-width="4" />
+        <!-- Lock Shackle -->
+        <path d="M 236 255 L 236 230 C 236 210 276 210 276 230 L 276 255" fill="none" stroke="#00FFFF" stroke-width="4" />
+
+        <!-- Keyhole (Shattered) -->
+        <circle cx="256" cy="275" r="9" fill="#0D1117" stroke="#00FFFF" stroke-width="2" />
+        <rect x="252" y="275" width="8" height="18" fill="#0D1117" stroke="#00FFFF" stroke-width="2" />
+
+        <!-- Glowing Cracks (Privilege Escalation / Bypass) -->
+        <path d="M 226 280 L 256 255 L 286 280" fill="none" stroke="#FF1744" stroke-width="6" filter="url(#glow-red)" stroke-linejoin="round" />
+        <path d="M 256 255 L 256 220" fill="none" stroke="#FF1744" stroke-width="5" filter="url(#glow-red)" />
+        <path d="M 286 280 L 315 300" fill="none" stroke="#FF1744" stroke-width="4" filter="url(#glow-red)" />
+        <path d="M 226 280 L 195 300" fill="none" stroke="#FF1744" stroke-width="4" filter="url(#glow-red)" />
+        <path d="M 256 275 L 280 250" fill="none" stroke="#00FFFF" stroke-width="3" filter="url(#glow-cyan)" />
+
+        <!-- Flying Data Fragments (Result of the bypass) -->
+        <rect x="155" y="270" width="15" height="8" fill="#00FFFF" opacity="0.8" transform="rotate(-30, 155, 270)" />
+        <rect x="340" y="290" width="20" height="6" fill="#FF1744" opacity="0.8" transform="rotate(25, 340, 290)" />
+        <rect x="285" y="205" width="12" height="12" fill="#00FFFF" opacity="0.8" transform="rotate(45, 285, 205)" />
+        <rect x="230" y="205" width="8" height="8" fill="#FF1744" opacity="0.8" transform="rotate(15, 230, 205)" />
+    </g>
+
+    <!-- ==================== TOP-LEFT: MAGNIFYING GLASS (Discovery) ==================== -->
+    <g id="magnifying-glass" transform="translate(100, 100)">
+        <!-- Outer Ring -->
+        <circle cx="40" cy="40" r="30" fill="none" stroke="url(#cyanMetal)" stroke-width="8" />
+        <!-- Handle -->
+        <line x1="60" y1="60" x2="90" y2="90" stroke="url(#cyanMetal)" stroke-width="8" stroke-linecap="round" />
+        <!-- Inner Lens Detail -->
+        <circle cx="40" cy="40" r="18" fill="none" stroke="#00FFFF" stroke-width="2" opacity="0.5" />
+        <!-- Glowing Core (Discovery Highlight) -->
+        <circle cx="40" cy="40" r="8" fill="#00FFFF" filter="url(#glow-cyan)" />
+    </g>
+
+    <!-- ==================== TOP-RIGHT: WRENCH (Debugging / Kernel Manipulation) ==================== -->
+    <g id="wrench" transform="translate(360, 100)">
+        <!-- Base Tech Ring -->
+        <circle cx="50" cy="50" r="38" fill="none" stroke="#FF9100" stroke-width="6" opacity="0.3" />
+        <!-- Wrench Handle -->
+        <rect x="45" y="15" width="10" height="70" rx="4" fill="none" stroke="url(#orangeMetal)" stroke-width="8" />
+        <!-- Open End (Left) -->
+        <path d="M 15 50 C 15 35 35 35 35 50 L 35 60 L 15 60 Z" fill="none" stroke="url(#orangeMetal)" stroke-width="8" stroke-linejoin="round" />
+        <!-- Open End (Right) -->
+        <path d="M 65 50 C 65 35 85 35 85 50 L 85 60 L 65 60 Z" fill="none" stroke="url(#orangeMetal)" stroke-width="8" stroke-linejoin="round" />
+        <!-- Glowing Core (Debugging Action) -->
+        <circle cx="50" cy="50" r="8" fill="#FF9100" filter="url(#glow-orange)" />
+    </g>
+
+    <!-- ==================== GLITCH EFFECTS (Cyberpunk Atmosphere) ==================== -->
+    <rect x="180" y="300" width="70" height="6" fill="#FF1744" opacity="0.3" />
+    <rect x="300" y="330" width="40" height="4" fill="#00FFFF" opacity="0.3" />
+    <rect x="220" y="440" width="80" height="6" fill="#FF9100" opacity="0.2" />
+</svg>
