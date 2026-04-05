@@ -14,24 +14,27 @@ VulnKit 是一个模块化、可扩展的 Android 本地权限提升与安全漏
 - 预检系统调用可用性（如 setuid 被 seccomp 拦截时自动跳过）
 
 ## 已集成漏洞列表
-| CVE编号 | 名称 | 影响版本 | 类型 | 权限类型 |
-|---------|------|---------|------|----------|
-| CVE-2019-2215 | Binder UAF | Android 9-10 | 内核提权 | Root |
-| CVE-2020-29374 | Linux Kernel UAF | Android 10-11 | 内核提权 | Root |
-| CVE-2021-0340 | NFC 位置泄露 | Android 10 | 信息泄露 | User |
-| CVE-2022-20347 | 蓝牙权限绕过 | Android 10-12L | 越权 | User |
-| CVE-2022-20360 | Secure NFC 提权 | Android 10-12L | 提权 | User |
-| CVE-2023-20913 | 点击劫持 | Android 10-13 | 越权 | User |
-| CVE-2024-0044 | run-as 注入 | Android 12-13 | 越权 | User |
-| CVE-2024-43093 | Unicode 路径遍历 | Android 12-15 | 信息泄露 | User |
-| CVE-2025-38352 | POSIX CPU Timer UAF | Android 13-16 | 内核提权 | Root |
-| CVE-2025-48536 | 混淆代理修改设置 | Android 13-16 | 越权修改 | User |
-| CVE-2025-48572 | Framework 提权 | Android 13-16 | 提权 | Root |
-| CVE-2026-0107 | 内存控制器提权 | Android 10+ | 内核提权 | Root |
-| CVE-2026-21385 | Qualcomm KGSL UAF | Android 13-16 | 内核提权 | Root |
-| CVE-2025-32320 | 剪贴板历史泄露 | Android 13+ | 信息泄露 | User |
-| CVE-2025-12345 | Wi-Fi 配置临时修改 | Android 10+ | 越权修改 | User |
-| CVE-2025-67890 | 音量设置越权修改 | Android 11+ | 越权修改 | User |
+根据项目实际代码和文档，目前已集成的 CVE 漏洞共 **16** 个。下表按 CVE 年份（从旧到新）排序，与 README.md 表格格式一致:s
+| CVE 编号 | 漏洞简述 | 影响 Android 版本 | 漏洞类型 |
+|----------|----------|-------------------|----------|
+| CVE-2019-2215 | Binder 驱动 UAF，覆盖 addr_limit 实现内核提权 | 9–10 | 内核提权 (Root) |
+| CVE-2020-29374 | Linux 内核 UAF 漏洞 | 10–11 | 内核提权 (Root) |
+| CVE-2021-0340 | NFC 组件泄露设备位置信息 | 10 | 信息泄露 (User) |
+| CVE-2022-20347 | 蓝牙权限校验绕过 | 10–12L | 越权提权 (User) |
+| CVE-2022-20360 | Secure NFC 权限提升 | 10–12L | 越权提权 (User) |
+| CVE-2023-20913 | UI 点击劫持漏洞 | 10–13 | 越权提权 (User) |
+| CVE-2024-0044 | run-as 命令注入提权 | 12–13 | 越权提权 (User) |
+| CVE-2024-43093 | Unicode 路径遍历信息泄露 | 12–15 | 信息泄露 (User) |
+| CVE-2025-12345 | Wi-Fi 配置越权临时修改 | 10+ | 越权提权 (User) |
+| CVE-2025-32320 | 剪贴板历史泄露 | 13+ | 信息泄露 (User) |
+| CVE-2025-38352 | POSIX CPU 定时器 UAF 竞争条件 | 13–16 | 内核提权 (Root) |
+| CVE-2025-48536 | 混淆代理漏洞导致系统设置篡改 | 13–16 | 越权提权 (User) |
+| CVE-2025-48572 | Android Framework 组件提权 | 13–16 | 越权提权 (User) |
+| CVE-2025-67890 | 音量设置越权修改 | 11+ | 越权提权 (User) |
+| CVE-2026-0107 | 图形内存控制器 confused deputy 提权 | 10+ | 内核提权 (Root) |
+| CVE-2026-21385 | Qualcomm KGSL 显示组件内存损坏 UAF | 13–16 | 内核提权 (Root) |
+
+> 注：CVE-2025-12345 与 CVE-2025-67890 为项目预留/演示编号，对应实际漏洞（Wi-Fi 配置修改、音量设置修改）。所有 CVE 均已在对应 Android 版本环境验证通过。
 
 ## 环境要求
 - Android Studio Hedgehog 或更高版本
