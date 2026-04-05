@@ -2,4 +2,7 @@
     <string name="app_name">VulnKit</string>
     <string name="loading_message">正在执行漏洞...</string>
     <string name="loading_icon_desc">加载图标</string>
+    <string name="vm_ops">vm_ops 偏移 (十进制)</string>
+    <string name="prepare_kernel_cred">prepare_kernel_cred 地址 (十六进制)</string>
+    <string name="commit_creds">commit_creds 地址 (十六进制)</string>
 </resources>

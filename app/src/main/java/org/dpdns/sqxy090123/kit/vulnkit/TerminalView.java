@@ -83,6 +83,7 @@ public class TerminalView extends ScrollView {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                    post(() -> outputView.append(e + "\n"));
                 }
             }).start();
         } catch (Exception e) {

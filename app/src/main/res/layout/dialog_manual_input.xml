@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/commit_creds"
+        android:textSize="14sp" />
+    <EditText
+        android:id="@+id/et_commit_creds"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/prepare_kernel_cred"
+        android:layout_marginTop="8dp"
+        android:textSize="14sp" />
+    <EditText
+        android:id="@+id/et_prepare_kernel_cred"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/vm_ops"
+        android:layout_marginTop="8dp"
+        android:textSize="14sp" />
+    <EditText
+        android:id="@+id/et_vm_ops_offset"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number" />
+</LinearLayout>

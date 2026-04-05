@@ -148,7 +148,8 @@
         android:theme="@style/Theme.VulnKit"
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_app_icon"
-        android:roundIcon="@drawable/ic_app_icon">
+        android:roundIcon="@drawable/ic_app_icon"
+        android:largeHeap="true">
 
         <activity
             android:name=".MainActivity"
