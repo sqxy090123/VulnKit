@@ -5,7 +5,7 @@
 #include <signal.h>
 #include <android/log.h>
 #include "root_shell.h"
-#include "exploits.h"
+#include "include/exploits.h"
 #include <sys/system_properties.h> // 添加这个头文件用于获取系统属性
 
 #define TAG "VulnKitNative"
@@ -31,6 +31,9 @@ int cve_2026_0038(void);
 int cve_2026_0032(void);
 int cve_2024_53104(void);
 int cve_2025_0088(void);
+
+int cve_2025_21479_with_phys(uint64_t pt_phys);
+
 }
 
 // 检测 setuid 是否被 seccomp 拦截
@@ -186,4 +189,16 @@ extern "C" JNIEXPORT jboolean JNICALL
 Java_org_dpdns_sqxy090123_kit_vulnkit_JNIInterface_cve202453104_1exploit(JNIEnv *env, jclass clazz) {
     LOGI("Calling cve_2024_53104()");
     return cve_2024_53104() == 0 ? JNI_TRUE : JNI_FALSE;
+}
+extern "C" JNIEXPORT jboolean JNICALL
+Java_org_dpdns_sqxy090123_kit_vulnkit_exploits_CVE_12025_121479_1Chain_exploitWithPhys(
+        JNIEnv *env, jobject thiz, jlong ptPhys) {
+    // 调用 cve_2025_21479_with_phys
+    return cve_2025_21479_with_phys((uint64_t)ptPhys) == 0 ? JNI_TRUE : JNI_FALSE;
+}
+
+extern "C" JNIEXPORT jlong JNICALL
+Java_org_dpdns_sqxy090123_kit_vulnkit_exploits_CVE_12025_121479_1Chain_getDirectBufferAddress(
+        JNIEnv *env, jobject thiz, jobject buffer) {
+    return (jlong) env->GetDirectBufferAddress(buffer);
 }

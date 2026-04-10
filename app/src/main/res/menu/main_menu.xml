@@ -5,4 +5,13 @@
         android:id="@+id/action_vulnerabilities"
         android:title="+"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/action_device_info"
+        android:title="设备信息" />
+    <item
+        android:id="@+id/action_env_score"
+        android:title="环境评分" />
+    <item
+        android:id="@+id/action_system_diagnose"
+        android:title="系统诊断" />
 </menu>

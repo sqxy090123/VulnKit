@@ -151,6 +151,18 @@ public class TerminalView extends ScrollView {
             try {
                 shellOutput.writeBytes(cmd + "\n");
                 shellOutput.flush();
+
+                // 读取标准输出和错误输出
+                java.io.InputStream is = shellProcess.getInputStream();
+                java.io.InputStream es = shellProcess.getErrorStream();
+                byte[] buf = new byte[4096];
+                int len;
+                while ((len = is.read(buf)) > 0) {
+                    outputView.append(new String(buf, 0, len));
+                }
+                while ((len = es.read(buf)) > 0) {
+                    outputView.append("[ERR] " + new String(buf, 0, len));
+                }
             } catch (Exception e) {
                 outputView.append("命令执行失败: " + e.getMessage() + "\n");
             }

@@ -119,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
+
     }
 
     @Override
@@ -126,6 +127,15 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.action_vulnerabilities) {
             Intent intent = new Intent(this, VulnerabilityListActivity.class);
             startActivity(intent);
+            return true;
+        } else if (item.getItemId() == R.id.action_device_info) {
+            startActivity(new Intent(this, DeviceInfoActivity.class));
+            return true;
+        } else if (item.getItemId() == R.id.action_env_score) {
+            startActivity(new Intent(this, EnvironmentScoreActivity.class));
+            return true;
+        } else if (item.getItemId() == R.id.action_system_diagnose) {
+            startActivity(new Intent(this, SystemDiagnoseActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);

@@ -100,7 +100,13 @@
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.REQUEST_COMPANION_PROFILE_APP_STREAMING" />
     <uses-permission android:name="android.permission.STATUS_BAR" />
+    <uses-permission android:name="android.permission.UPDATE_DEVICE_STATS" />
     <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
 
     <uses-permission android:name="moe.shizuku.manager.permission.API_V23" />
 
@@ -139,7 +145,14 @@
     <uses-permission android:name="android.permission.REBOOT" />
 
 
-    <permission android:name="org.dpdns.sqxy090123.kit.vulnkit.ACCESS" />
+    <permission android:name="org.dpdns.sqxy090123.kit.vulnkit.ACCESS_VULNERABLE_LIST" />
+    <permission android:name="org.dpdns.sqxy090123.kit.vulnkit.ACCESS_ALL_INFO" />
+    <permission android:name="org.dpdns.sqxy090123.kit.vulnkit.ACCESS_DEVICE_INFO" />
+    <permission android:name="org.dpdns.sqxy090123.kit.vulnkit.ACCESS_ENV_SCORE" />
+    <permission android:name="org.dpdns.sqxy090123.kit.vulnkit.ACCESS_ENV_SCORE_DETAIL" />
+    <permission
+        android:name="org.dpdns.sqxy090123.kit.vulnkit.ACCESS_DIAGNOSE"
+        android:protectionLevel="signature|privileged" />
 
     <application
         android:allowBackup="true"
@@ -159,14 +172,56 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
         </activity>
 
         <activity android:name=".VulnerabilityListActivity"
             android:parentActivityName=".MainActivity" />
 
+        <activity android:name=".DeviceInfoActivity"
+            android:exported="true"/>
+
         <service android:name=".VulnService"
             android:exported="true"
             android:process=":vulnservice" />
+
+        <service
+            android:name=".VulnUserService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync"
+            android:permission="android.permission.BIND_SHIZUKU_USER_SERVICE;moe.shizuku.manager.permission.API_V23">
+            <intent-filter>
+                <action android:name="rikka.shizuku.USER_SERVICE" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".PhysLeakService"
+            android:exported="false"
+            android:permission="android.permission.BIND_SHIZUKU_USER_SERVICE;moe.shizuku.manager.permission.API_V23">
+        <intent-filter>
+                <action android:name="rikka.shizuku.USER_SERVICE" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".SystemDiagnoseActivity"
+            android:exported="true"
+            android:permission="org.dpdns.sqxy090123.kit.vulnkit.ACCESS_DIAGNOSE"
+            android:parentActivityName=".MainActivity">
+            <intent-filter>
+                <action android:name="org.dpdns.sqxy090123.kit.vulnkit.ACTION_VIEW_DIAGNOSE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".EnvironmentScoreActivity"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"
+            android:permission="org.dpdns.sqxy090123.kit.vulnkit.ACCESS_ENV_SCORE;org.dpdns.sqxy090123.kit.vulnkit.ACCESS_ENV_SCORE"/>
 
         <receiver android:name=".BootReceiver"
             android:exported="true">
@@ -187,6 +242,18 @@
             </intent-filter>
         </receiver>
 
+        <!-- 移除原有的 FileProvider，替换为自定义 Provider -->
+        <provider
+            android:name=".InternalFileProvider"
+            android:authorities="org.dpdns.sqxy090123.kit.vulnkit.files"
+            android:exported="true"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <!-- 保留原有的 FileProvider（不导出）用于内部 FileProvider 功能 -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="org.dpdns.sqxy090123.kit.vulnkit.fileprovider"
@@ -205,6 +272,40 @@
             android:exported="true"
             android:multiprocess="false"
             android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
+
+        <!-- 卸载挽留 Activity -->
+        <activity
+            android:name=".UninstallRetentionActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:excludeFromRecents="true"
+            android:exported="true">
+            <!-- 通用卸载 Intent -->
+            <intent-filter>
+                <action android:name="android.intent.action.UNINSTALL_PACKAGE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="package" />
+            </intent-filter>
+            <!-- 小米特定 -->
+            <intent-filter>
+                <action android:name="miui.intent.action.UNINSTALL" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <!-- 华为特定 -->
+            <intent-filter>
+                <action android:name="com.huawei.android.launcher.action.UNINSTALL_SHORTCUT" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <!-- OPPO 特定 -->
+            <intent-filter>
+                <action android:name="oppo.intent.action.UNINSTALL" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <!-- vivo 特定 -->
+            <intent-filter>
+                <action android:name="com.vivo.launcher.action.UNINSTALL" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
     </application>
 

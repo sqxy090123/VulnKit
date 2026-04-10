@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="env_score"
+        android:enabled="true"
+        android:icon="@drawable/ic_app_icon"
+        android:shortcutShortLabel="@string/shortcut_env_short"
+        android:shortcutLongLabel="@string/shortcut_env_long">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="org.dpdns.sqxy090123.kit.vulnkit"
+            android:targetClass="org.dpdns.sqxy090123.kit.vulnkit.EnvironmentScoreActivity" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="device_info"
+        android:enabled="true"
+        android:icon="@drawable/ic_app_icon"
+        android:shortcutShortLabel="@string/shortcut_info_short"
+        android:shortcutLongLabel="@string/shortcut_info_long">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="org.dpdns.sqxy090123.kit.vulnkit"
+            android:targetClass="org.dpdns.sqxy090123.kit.vulnkit.DeviceInfoActivity" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="system_diagnose"
+        android:enabled="true"
+        android:icon="@drawable/ic_app_icon"
+        android:shortcutShortLabel="@string/shortcut_diagnose_short"
+        android:shortcutLongLabel="@string/shortcut_diagnose_long">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="org.dpdns.sqxy090123.kit.vulnkit"
+            android:targetClass="org.dpdns.sqxy090123.kit.vulnkit.SystemDiagnoseActivity" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+</shortcuts>

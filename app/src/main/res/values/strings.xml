@@ -5,4 +5,10 @@
     <string name="vm_ops">vm_ops 偏移 (十进制)</string>
     <string name="prepare_kernel_cred">prepare_kernel_cred 地址 (十六进制)</string>
     <string name="commit_creds">commit_creds 地址 (十六进制)</string>
+    <string name="shortcut_env_short">环境评分</string>
+    <string name="shortcut_env_long">查看系统环境安全评分</string>
+    <string name="shortcut_info_short">设备信息</string>
+    <string name="shortcut_info_long">查看设备详细信息</string>
+    <string name="shortcut_diagnose_short">系统诊断</string>
+    <string name="shortcut_diagnose_long">运行系统健康诊断</string>
 </resources>
