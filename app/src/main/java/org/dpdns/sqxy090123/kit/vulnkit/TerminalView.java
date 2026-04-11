@@ -29,16 +29,13 @@ public class TerminalView extends ScrollView {
     }
 
     private void init() {
-        // 设置背景
         setBackgroundColor(Color.BLACK);
 
-        // 创建垂直布局容器（ScrollView 只能有一个直接子视图）
         container = new LinearLayout(getContext());
         container.setOrientation(LinearLayout.VERTICAL);
         container.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         addView(container);
 
-        // 输出文本区域
         outputView = new TextView(getContext());
         outputView.setTextColor(Color.GREEN);
         outputView.setTextSize(12);
@@ -48,7 +45,6 @@ public class TerminalView extends ScrollView {
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         container.addView(outputView);
 
-        // 输入框
         inputEdit = new EditText(getContext());
         inputEdit.setTextColor(Color.GREEN);
         inputEdit.setBackgroundColor(Color.BLACK);
@@ -74,6 +70,9 @@ public class TerminalView extends ScrollView {
             shellProcess = Runtime.getRuntime().exec("sh");
             shellOutput = new DataOutputStream(shellProcess.getOutputStream());
             shellInput = new BufferedReader(new InputStreamReader(shellProcess.getInputStream()));
+            BufferedReader shellError = new BufferedReader(new InputStreamReader(shellProcess.getErrorStream()));
+
+            // 标准输出读取线程
             new Thread(() -> {
                 try {
                     String line;
@@ -82,8 +81,20 @@ public class TerminalView extends ScrollView {
                         post(() -> outputView.append(finalLine + "\n"));
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
-                    post(() -> outputView.append(e + "\n"));
+                    post(() -> outputView.append("读取输出异常: " + e.getMessage() + "\n"));
+                }
+            }).start();
+
+            // 错误输出读取线程
+            new Thread(() -> {
+                try {
+                    String line;
+                    while ((line = shellError.readLine()) != null) {
+                        final String finalLine = line;
+                        post(() -> outputView.append("[ERR] " + finalLine + "\n"));
+                    }
+                } catch (Exception e) {
+                    // 忽略
                 }
             }).start();
         } catch (Exception e) {
@@ -101,16 +112,12 @@ public class TerminalView extends ScrollView {
             return;
         }
         if (cmd.startsWith("runin ")) {
-            String target = cmd.substring(6).trim(); // 提取 app|shell|system|root
+            String target = cmd.substring(6).trim();
             if (target.equals("app")) {
-                // 降级到普通用户 shell (启动一个新的进程)
-                // 注意：这需要 JNIInterface 实现对应的降级逻辑，目前先留空
                 outputView.append("切换到 App shell 的功能正在开发中\n");
             } else if (target.equals("shell")) {
-                // 降级到 shell 用户 (通常是 2000 或 2001)
                 outputView.append("切换到 Shell shell 的功能正在开发中\n");
             } else if (target.equals("system")) {
-                // 降级到 system 用户
                 outputView.append("切换到 System shell 的功能正在开发中\n");
             } else if (target.equals("root")) {
                 if (!usingRootShell) {
@@ -124,13 +131,10 @@ public class TerminalView extends ScrollView {
             return;
         }
 
-        // 处理 'exituser' 命令，退出当前 shell，返回初始 shell
         if (cmd.equals("exituser")) {
             if (usingRootShell) {
-                // 关闭当前 root shell
                 JNIInterface.closeRootShell();
                 usingRootShell = false;
-                // 重新启动普通 shell
                 startShell();
                 outputView.append("已退出 root shell，返回普通 shell\n");
             } else {
@@ -151,18 +155,6 @@ public class TerminalView extends ScrollView {
             try {
                 shellOutput.writeBytes(cmd + "\n");
                 shellOutput.flush();
-
-                // 读取标准输出和错误输出
-                java.io.InputStream is = shellProcess.getInputStream();
-                java.io.InputStream es = shellProcess.getErrorStream();
-                byte[] buf = new byte[4096];
-                int len;
-                while ((len = is.read(buf)) > 0) {
-                    outputView.append(new String(buf, 0, len));
-                }
-                while ((len = es.read(buf)) > 0) {
-                    outputView.append("[ERR] " + new String(buf, 0, len));
-                }
             } catch (Exception e) {
                 outputView.append("命令执行失败: " + e.getMessage() + "\n");
             }
@@ -170,7 +162,6 @@ public class TerminalView extends ScrollView {
     }
 
     private void switchToRootShell() {
-        // 关闭普通 shell
         if (shellProcess != null) {
             shellProcess.destroy();
             shellProcess = null;
@@ -178,7 +169,6 @@ public class TerminalView extends ScrollView {
         usingRootShell = true;
         inputEdit.setHint("# ");
         outputView.append("切换到 root shell，您现在拥有 root 权限\n");
-        // 启动一个读取线程，持续输出 root shell 的结果
         new Thread(() -> {
             while (usingRootShell && JNIInterface.isRootShellAvailable()) {
                 String line = JNIInterface.readRootShell();
@@ -191,7 +181,6 @@ public class TerminalView extends ScrollView {
             }
         }).start();
         if (usingRootShell) {
-            // 自动执行 whoami 验证
             JNIInterface.writeRootShell("whoami\n");
             String output = JNIInterface.readRootShell();
             if (output != null && output.contains("root")) {
@@ -199,7 +188,6 @@ public class TerminalView extends ScrollView {
             } else {
                 outputView.append("Root shell 验证失败，输出: " + (output != null ? output : "null") + "\n");
                 outputView.append("请检查漏洞是否正确提权\n");
-                // 如果验证失败，可以考虑回退到普通 shell
                 usingRootShell = false;
                 startShell();
             }

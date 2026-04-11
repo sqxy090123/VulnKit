@@ -143,6 +143,7 @@
     <uses-permission android:name="android.permission.INJECT_EVENTS" />
     <uses-permission android:name="android.permission.INTERNAL_SYSTEM_WINDOW" />
     <uses-permission android:name="android.permission.REBOOT" />
+    <uses-permission android:name="android.content.action.DOCUMENTS_PROVIDER" />
 
 
     <permission android:name="org.dpdns.sqxy090123.kit.vulnkit.ACCESS_VULNERABLE_LIST" />
@@ -247,11 +248,8 @@
             android:name=".InternalFileProvider"
             android:authorities="org.dpdns.sqxy090123.kit.vulnkit.files"
             android:exported="true"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
+            android:grantUriPermissions="true"
+            android:permission="android.permission.MANAGE_DOCUMENTS" />
 
         <!-- 保留原有的 FileProvider（不导出）用于内部 FileProvider 功能 -->
         <provider

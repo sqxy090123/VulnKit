@@ -39,7 +39,6 @@ public class DeviceInfoActivity extends AppCompatActivity {
     private void loadDeviceInfo() {
         StringBuilder sb = new StringBuilder();
         try {
-            // 基础系统信息
             sb.append("=== 系统信息 ===\n");
             sb.append("制造商: ").append(Build.MANUFACTURER).append("\n");
             sb.append("型号: ").append(Build.MODEL).append("\n");
@@ -50,21 +49,35 @@ public class DeviceInfoActivity extends AppCompatActivity {
             sb.append("安全补丁: ").append(Build.VERSION.SECURITY_PATCH).append("\n");
             sb.append("构建指纹: ").append(Build.FINGERPRINT).append("\n\n");
 
-            // Android ID
             String androidId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
             sb.append("Android ID: ").append(androidId).append("\n\n");
 
-            // 内核版本（纯文件读取，无命令执行）
             sb.append("=== 内核信息 ===\n");
             sb.append("内核版本: ").append(getKernelVersion()).append("\n");
             sb.append("架构: ").append(System.getProperty("os.arch")).append("\n\n");
 
-            // 应用信息
+            // CPU 信息
+            EnvironmentSniffer.CpuInfo cpu = EnvironmentSniffer.getCpuInfo();
+            sb.append("=== CPU 信息 ===\n");
+            sb.append(cpu.toString()).append("\n");
+
+            // GPU 信息
+            EnvironmentSniffer.GpuInfo gpu = EnvironmentSniffer.getGpuInfo();
+            sb.append("=== GPU 信息 ===\n");
+            sb.append(gpu.toString()).append("\n");
+
             try {
                 PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
                 sb.append("=== 应用信息 ===\n");
                 sb.append("版本名: ").append(pInfo.versionName).append("\n");
-                sb.append("版本号: ").append(pInfo.versionCode).append("\n");
+                // 将原来的 versionCode 行改为：
+                long versionCode = 0;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+                    versionCode = pInfo.getLongVersionCode();
+                } else {
+                    versionCode = pInfo.versionCode;
+                }
+                sb.append("版本号: ").append(versionCode).append("\n");
                 sb.append("目标 SDK: ").append(pInfo.applicationInfo.targetSdkVersion).append("\n");
             } catch (PackageManager.NameNotFoundException e) {
                 sb.append("无法获取应用信息\n");
@@ -73,8 +86,6 @@ public class DeviceInfoActivity extends AppCompatActivity {
             sb.append("\n=== 其他 ===\n");
             sb.append("Is HarmonyOS: ").append(JNIInterface.isHarmonyOS()).append("\n");
             sb.append("Root Shell 可用: ").append(JNIInterface.isRootShellAvailable()).append("\n");
-            // 移除会导致 seccomp 崩溃的 checkSetuidAvailable 调用
-            // sb.append("setuid 可用: ").append(JNIInterface.checkSetuidAvailable()).append("\n");
             sb.append("setuid 可用: (未检测，避免 seccomp 崩溃)\n");
 
             tvDeviceInfo.setText(sb.toString());
@@ -84,23 +95,15 @@ public class DeviceInfoActivity extends AppCompatActivity {
     }
 
     private String getKernelVersion() {
-        // 方法1：读取 /proc/version（推荐，避免 seccomp）
         try (BufferedReader reader = new BufferedReader(new FileReader("/proc/version"))) {
             String line = reader.readLine();
             if (line != null) {
-                // 提取 "Linux version x.x.x" 部分
                 int start = line.indexOf("version ") + 8;
                 int end = line.indexOf(" ", start);
-                if (end > start) {
-                    return line.substring(start, end);
-                }
+                if (end > start) return line.substring(start, end);
             }
-        } catch (IOException ignored) {
-        }
-
-        // 方法2：读取系统属性（回退）
-        String kernel = System.getProperty("os.version");
-        return kernel != null ? kernel : "未知";
+        } catch (IOException ignored) {}
+        return System.getProperty("os.version");
     }
 
     @Override

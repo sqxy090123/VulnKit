@@ -64,6 +64,11 @@ public class SystemDiagnoseActivity extends AppCompatActivity {
         }
         tvScoreSummary.setText(String.format("%d 分 (%s)", result.totalScore, levelText));
         tvScoreSummary.setTextColor(color);
+        StringBuilder details = result.details;
+        details.append("\n\n=== CPU 信息 ===\n");
+        details.append(EnvironmentSniffer.getCpuInfo().toString());
+        details.append("\n=== GPU 信息 ===\n");
+        details.append(EnvironmentSniffer.getGpuInfo().toString());
 
         // 显示详细报告
         tvDetails.setText(result.details.toString());

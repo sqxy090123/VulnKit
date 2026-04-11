@@ -31,7 +31,6 @@ int cve_2026_0038(void);
 int cve_2026_0032(void);
 int cve_2024_53104(void);
 int cve_2025_0088(void);
-
 int cve_2025_21479_with_phys(uint64_t pt_phys);
 
 }
