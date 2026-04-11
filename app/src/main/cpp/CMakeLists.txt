@@ -21,7 +21,6 @@ add_library(vulnkit SHARED
         exploits/cve_2026_0107_helper.c
         exploits/cve_2026_0107.c
         exploits/cve_2026_21385.c
-        exploits/cve_2025_38352.c
         exploits/cve_2025_54642.c
         exploits/cve_2023_20938.c
         exploits/cve_2022_22057.c
