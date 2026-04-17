@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "org.dpdns.sqxy090123.kit.vulnkit"
-        minSdk 25
+        minSdk 26
         targetSdk 33
         versionCode 1
         versionName "1.0"
