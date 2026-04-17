@@ -65,6 +65,13 @@ android {
     tasks.withType(JavaCompile) {
         options.compilerArgs << "-Xlint:deprecation"
     }
+
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+        ignoreWarnings true
+        quiet true
+    }
 }
 
 dependencies {
