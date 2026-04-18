@@ -1,4 +1,5 @@
 # VulnKit - Android 漏洞利用框架
+## [![Android CI](https://github.com/sqxy090123/VulnKit/actions/workflows/android.yml/badge.svg)](https://github.com/sqxy090123/VulnKit/actions/workflows/android.yml)
 
 VulnKit 是一个模块化、可扩展的 Android 本地权限提升与安全漏洞验证工具。它集成了多个历史高危漏洞的利用代码，支持通过反射动态加载漏洞模块，并提供统一的 Root Shell 管理接口。
 

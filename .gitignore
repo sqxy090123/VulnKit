@@ -17,3 +17,4 @@ local.properties
 _*.*
 .env
 .vscode
+.github
