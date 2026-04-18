@@ -9,10 +9,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import androidx.core.content.pm.PackageInfoCompat;
 
 public class DeviceInfoActivity extends AppCompatActivity {
     private TextView tvDeviceInfo;
@@ -71,12 +71,9 @@ public class DeviceInfoActivity extends AppCompatActivity {
                 sb.append("=== 应用信息 ===\n");
                 sb.append("版本名: ").append(pInfo.versionName).append("\n");
                 // 将原来的 versionCode 行改为：
-                long versionCode = 0;
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
-                    versionCode = pInfo.getLongVersionCode();
-                } else {
-                    versionCode = pInfo.versionCode;
-                }
+                // 在 loadDeviceInfo() 方法中
+                long versionCode = PackageInfoCompat.getLongVersionCode(pInfo);
+                sb.append("版本号: ").append(versionCode).append("\n");
                 sb.append("版本号: ").append(versionCode).append("\n");
                 sb.append("目标 SDK: ").append(pInfo.applicationInfo.targetSdkVersion).append("\n");
             } catch (PackageManager.NameNotFoundException e) {

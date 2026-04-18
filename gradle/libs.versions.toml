@@ -19,8 +19,8 @@ provider = "13.1.5"
 # 删除 coreSplashscreenVersion = "1.2.0"
 
 [libraries]
-appcompat-v131 = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
-constraintlayout-v211 = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayoutVersion" }
+appcompat-v131 = { module = "androidx.appcompat:appcompat", version = "1.6.1" }
+constraintlayout-v211 = { module = "androidx.constraintlayout:constraintlayout", version = "2.1.4" }
 core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 espresso-core-v340 = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCoreVersion" }
 api = { module = "dev.rikka.shizuku:api", version.ref = "api" }
@@ -33,7 +33,7 @@ material = { group = "com.google.android.material", name = "material", version.r
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
-material-v140 = { module = "com.google.android.material:material", version.ref = "materialVersion" }
+material-v140 = { module = "com.google.android.material:material", version = "1.10.0" }
 provider = { module = "dev.rikka.shizuku:provider", version.ref = "provider" }
 # 删除 androidx-core-splashscreen 行，统一使用上面的 core-splashscreen
 [plugins]

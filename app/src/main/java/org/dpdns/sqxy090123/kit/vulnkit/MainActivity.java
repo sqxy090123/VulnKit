@@ -137,6 +137,15 @@ public class MainActivity extends AppCompatActivity {
         } else if (item.getItemId() == R.id.action_system_diagnose) {
             startActivity(new Intent(this, SystemDiagnoseActivity.class));
             return true;
+        } else if (item.getItemId() == R.id.action_shizuku_auth) {
+            startActivity(new Intent(this, ShizukuAuthActivity.class));
+            return true;
+        } else if (item.getItemId() == R.id.action_app_installer) {
+            startActivity(new Intent(this, AppInstallerActivity.class));
+            return true;
+        } else if (item.getItemId() == R.id.action_permission_manager) {
+            startActivity(new Intent(this, PermissionManagerActivity.class));
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

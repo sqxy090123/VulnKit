@@ -3,6 +3,10 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        'NameError Studio Signature 1' {
+        }
+    }
     namespace 'org.dpdns.sqxy090123.kit.vulnkit'
     compileSdk 34
 
@@ -24,6 +28,7 @@ android {
         ndk {
             abiFilters 'arm64-v8a', 'armeabi-v7a'
         }
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -62,7 +67,7 @@ android {
         viewBinding true
     }
 
-    tasks.withType(JavaCompile) {
+    tasks.withType(JavaCompile).configureEach {
         options.compilerArgs << "-Xlint:deprecation"
     }
 
@@ -85,4 +90,5 @@ dependencies {
     implementation libs.recyclerview
     implementation libs.api
     implementation libs.provider
+    implementation 'com.github.topjohnwu:libsu:5.2.2'
 }

@@ -108,7 +108,17 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
 
+    <!---->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <!-- Shizuku 权限 -->
     <uses-permission android:name="moe.shizuku.manager.permission.API_V23" />
+
+    <!-- Dhizuku 权限 -->
+    <uses-permission android:name="com.rosan.dhizuku.permission.API" />
+    <!---->
 
 
     <uses-feature android:name="android.hardware.usb.host" />
@@ -154,6 +164,7 @@
     <permission
         android:name="org.dpdns.sqxy090123.kit.vulnkit.ACCESS_DIAGNOSE"
         android:protectionLevel="signature|privileged" />
+    <permission android:name="org.dpdns.sqxy090123.kit.vulnkit.MANAGE_BY_USER" />
 
     <application
         android:allowBackup="true"
@@ -187,6 +198,27 @@
         <service android:name=".VulnService"
             android:exported="true"
             android:process=":vulnservice" />
+
+        <activity
+            android:name=".ShizukuAuthActivity"
+            android:exported="true"
+            android:theme="@style/Theme.VulnKit" />
+
+        <activity
+            android:name=".AppInstallerActivity"
+            android:exported="true"
+            android:theme="@style/Theme.VulnKit" />
+
+        <activity
+            android:name=".PermissionManagerActivity"
+            android:exported="true"
+            android:permission="org.dpdns.sqxy090123.kit.vulnkit.MANAGE_BY_USER"
+            android:theme="@style/Theme.VulnKit">
+            <intent-filter>
+                <action android:name="org.dpdns.sqxy090123.kit.vulnkit.MANAGE_PERMISSIONS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <service
             android:name=".VulnUserService"

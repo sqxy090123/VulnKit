@@ -36,6 +36,8 @@ add_library(vulnkit SHARED
         exploits/cve_2024_53104.c
         exploits/cve_2025_0088.c
         exploits/cve_2025_36929.c           # 新增
+        exploits/cve_2025_48567.c
+        exploits/cve_2026_0027.c
         include/gpu_physical_mem.c
 )
 
